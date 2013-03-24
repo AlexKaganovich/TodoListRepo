@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
         android:id="@+id/menuItemAdd"
         android:title="Add"/>
 
-=======
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuItemAdd"
-          android:title="Add" />
-    <item android:id="@+id/menuItemDelete"
-          android:title="Delete" />
->>>>>>> 39ec1c0cf691d8cff2eb1b0e81c6169448943aa0
 </menu>

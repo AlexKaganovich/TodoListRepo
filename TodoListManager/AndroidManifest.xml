@@ -22,11 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity android:name=".AddNewTodoItemActivity"
     	    android:theme="@android:style/Theme.Dialog" />
-=======
->>>>>>> 39ec1c0cf691d8cff2eb1b0e81c6169448943aa0
     </application>
 
 </manifest>
