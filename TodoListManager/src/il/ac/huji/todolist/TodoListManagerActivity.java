@@ -1,6 +1,7 @@
 package il.ac.huji.todolist;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Date;
 import android.app.Activity;
 import android.content.Intent;
@@ -12,14 +13,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+=======
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.EditText;
+>>>>>>> 39ec1c0cf691d8cff2eb1b0e81c6169448943aa0
 import android.widget.ListView;
 
 
 public class TodoListManagerActivity extends Activity {
+<<<<<<< HEAD
 
 	private ListView listView;
 	private SpecialAdapter listAdapter;
 	private ArrayList<Task> items = new ArrayList<Task>();
+=======
+	
+	private ListView listView;
+	private SpecialAdapter listAdapter;
+	private ArrayList<String> items = new ArrayList<String>();
+>>>>>>> 39ec1c0cf691d8cff2eb1b0e81c6169448943aa0
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +45,16 @@ public class TodoListManagerActivity extends Activity {
 		listView = (ListView) findViewById(R.id.lstTodoItems);
 		listAdapter = new SpecialAdapter(this, android.R.layout.simple_list_item_1, items);
 		listView.setAdapter(listAdapter);
+<<<<<<< HEAD
 
 		registerForContextMenu(listView);
+=======
+>>>>>>> 39ec1c0cf691d8cff2eb1b0e81c6169448943aa0
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+<<<<<<< HEAD
 		getMenuInflater().inflate(R.menu.menu, menu);
 		return true;
 	}
@@ -103,6 +123,38 @@ public class TodoListManagerActivity extends Activity {
 		}
 		}
 		return true;
+=======
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu, menu);
+		return true;
+	}
+	
+	/**
+     * Event Handling for Individual menu item selected
+     * Identify single menu item by it's id
+     * */
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId()) {
+        
+        //Add item
+        case R.id.menuItemAdd:
+        	items.add(((EditText)findViewById(R.id.edtNewItem)).getText().toString());
+        	listAdapter.notifyDataSetChanged();
+        	return true;
+            
+        //Delete item
+        case R.id.menuItemDelete:
+        	Object sel = listView.getSelectedItem();
+        	if (sel != null) {
+        		listAdapter.remove((String)sel);
+        		listAdapter.notifyDataSetChanged();
+        	}
+        }
+        
+        return super.onOptionsItemSelected(item);
+>>>>>>> 39ec1c0cf691d8cff2eb1b0e81c6169448943aa0
 	}
 
 }

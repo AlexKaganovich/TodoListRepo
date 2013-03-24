@@ -7,6 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".TodoListManagerActivity" >
+<<<<<<< HEAD
 
     <ListView
         android:id="@+id/lstTodoItems"
@@ -15,3 +16,26 @@
     </ListView>
 
 </RelativeLayout>
+=======
+    
+    <EditText
+    android:id="@+id/edtNewItem"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginLeft="14dp"
+    android:ems="10" />
+    
+	<ListView
+	    android:id="@+id/lstTodoItems"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_below="@+id/edtNewItem" >
+
+	</ListView>
+
+</RelativeLayout>
+
+>>>>>>> 39ec1c0cf691d8cff2eb1b0e81c6169448943aa0
