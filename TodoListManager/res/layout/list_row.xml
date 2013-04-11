@@ -1,0 +1,19 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/txtTodoTitle"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtTodoDueDate"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/txtTodoTitle" >
+    </TextView>
+
+</RelativeLayout>

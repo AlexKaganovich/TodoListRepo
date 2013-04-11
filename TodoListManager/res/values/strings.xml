@@ -4,5 +4,7 @@
     <string name="app_name">TodoListManager</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="parseApplication">UDiiQdesMfzE8tPJjM4gdhEWmkelHq8luoXyr0Hi</string>
+    <string name="clientKey">YS2mKf9zL8PCebBehnj308NWi96PiJIZ4T5wTFYu</string>
 
 </resources>
