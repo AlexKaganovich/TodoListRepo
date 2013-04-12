@@ -33,8 +33,6 @@ public class TodoDAL {
 		listAdapter = new SpecialAdapter(c, android.R.layout.simple_list_item_1, items);
 		db = helper.getWritableDatabase();
 		
-		insert(new Task("a", null));
-		
 		//Fill the list when first starting the application.
 		Cursor cursor =  db.query("todo", new String[] {"_id", "title", "due"},
 				null, null, null, null, null);
