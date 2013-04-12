@@ -12,12 +12,12 @@ public class Task implements ITodoItem {
 		date = d;
 	}
 	
-	public String toString() {
-		return title + " " + date;
-	}
-	
 	public String getTitle() {
 		return title;
+	}
+	
+	public Date getDueDate() {
+		return date;
 	}
 	
 	/**
@@ -34,18 +34,12 @@ public class Task implements ITodoItem {
 		return (num < 10 ? "0" : "") + num; 
 	}
 	
-	
 	/**
 	 * Check if the date has already passed.
 	 * @return
 	 */
 	static boolean isDue(Date date) {
 		return date == null ? false : new Date().after(date);
-	}
-
-	@Override
-	public Date getDueDate() {
-		return date;
 	}
 
 }
