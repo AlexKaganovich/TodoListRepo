@@ -4,6 +4,9 @@
     <item
         android:id="@+id/menuItemDelete"
         android:title="Delete Item"/>
+     <item
+        android:id="@+id/menuThumb"
+        android:title="Add Thumbnail"/>
     <item
         android:id="@+id/menuItemCall"
         android:title=""/>

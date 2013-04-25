@@ -2,30 +2,30 @@ package il.ac.huji.todolist;
 
 import java.util.Date;
 
-public class Task implements ITodoItem {
+import android.graphics.Bitmap;
+import android.widget.ImageView;
+
+public class Task {
 	
-	private final String title;
-	private final Date date;
+	final String title;
+	final Date date;
+	final ImageView thumb = null;
+	Bitmap img;
+	long id;
 	
-	Task(String s, Date d) {
-		title = s;
+	Task(long id, String s, Date d) {
+		//Remove quotes from string to prevent SQL injection and various bugs.
+		title = s.replaceAll("[\'|\"]+", "");
 		date = d;
+		this.id = id;
 	}
-	
-	public String getTitle() {
-		return title;
-	}
-	
-	public Date getDueDate() {
-		return date;
-	}
-	
+
 	/**
 	 * Generate the date string from the date object.
 	 * @return
 	 */
 	@SuppressWarnings("deprecation")
-	static String getDateStr(Date date) {
+	String getDateStr() {
 		return date == null ? "No due date" :
 			addZero(date.getDate()) + "/" + addZero(date.getMonth() + 1) + "/" + (date.getYear() + 1900);
 	}

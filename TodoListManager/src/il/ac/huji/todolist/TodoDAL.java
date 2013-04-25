@@ -1,5 +1,6 @@
 package il.ac.huji.todolist;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,12 +12,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 
 public class TodoDAL {
 
 	//The items in the list.
-	private ArrayList<ITodoItem> items = new ArrayList<ITodoItem>();
+	private ArrayList<Task> items = new ArrayList<Task>();
 	SpecialAdapter listAdapter;
 
 	//The database.
@@ -32,30 +35,47 @@ public class TodoDAL {
 		DBHelper helper = new DBHelper(c);
 		listAdapter = new SpecialAdapter(c, android.R.layout.simple_list_item_1, items);
 		db = helper.getWritableDatabase();
-		
+		helper.onCreate(db);
+
 		//Fill the list when first starting the application.
 		Cursor cursor =  db.query("todo", new String[] {"_id", "title", "due"},
 				null, null, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
-				long date = cursor.getLong(2);
-				Task t = new Task(cursor.getString(1), date == 0 ? null : new Date(date));
+				long dueDate;
+				try {
+					dueDate = cursor.getLong(2);
+				} catch (Exception e) {
+					dueDate = 0;
+				}
+
+				long taskID = cursor.getLong(0);
+				Task t = new Task(taskID, cursor.getString(1), dueDate == 0 ? null : new Date(dueDate));
 				items.add(t);
+
+				//Get the task image
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+				File file = new File(TodoListManagerActivity.getDir(), "taskImg" + taskID);
+				t.img = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+
 			} while (cursor.moveToNext());
 			listAdapter.notifyDataSetChanged();
 		}
-
-		//Create the parse user.
-		//ParseUser.enableAutomaticUser();
-		//ParseACL.setDefaultACL(new ParseACL(), true);
 	}
+	
 
 	/**
 	 * Insert a new item.
 	 * @param item
 	 * @return true if addition was successful.
 	 */
-	public boolean insert(ITodoItem item) {
+	public boolean insert(Task item) {
+
+		//Check that item with a similar title doesn't already exist.
+		if (db.query("todo", new String[] {"_id", "title", "due"},
+				"title = '" + item.title + "'", null, null, null, null).moveToFirst())
+			return false;
 
 		//Add the item to the list.
 		listAdapter.add(item);
@@ -63,17 +83,16 @@ public class TodoDAL {
 
 		//Add the item to the database.
 		ContentValues task = new ContentValues();
-		task.put("title", item.getTitle());
-		task.put("due", item.getDueDate() == null ? null : item.getDueDate().getTime());
-		db.insert("todo", null, task);
+		task.put("title", item.title);
+		if (item.date != null)
+			task.put("due", item.date == null ? null : item.date.getTime());
+		item.id = db.insert("todo", null, task);
 
 		//Add the item to the parse.
 		ParseObject parse = new ParseObject("todo");
-		parse.put("title", item.getTitle());
-		if (item.getDueDate() != null)
-			parse.put("due", item.getDueDate().getTime());
-		//parse.put("user", ParseUser.getCurrentUser());
-		//parse.setACL(new ParseACL(ParseUser.getCurrentUser()));
+		parse.put("title", item.title);
+		if (item.date != null)
+			parse.put("due", item.date.getTime());
 		parse.saveInBackground();
 
 		return true;
@@ -84,10 +103,10 @@ public class TodoDAL {
 	 * @param item
 	 * @return true if update was successful.
 	 */
-	public boolean update(ITodoItem item) {
+	public boolean update(Task item) {
 
 		for (int i = 0; i < items.size(); i++)
-			if (items.get(i).getTitle().equals(item.getTitle())) {
+			if (items.get(i).title.equals(item.title)) {
 
 				//Update the item in the list.
 				items.set(i, item);
@@ -95,14 +114,14 @@ public class TodoDAL {
 
 				//Update the item in the database.
 				ContentValues task = new ContentValues();
-				task.put("title", item.getTitle());
-				task.put("due", item.getDueDate() == null ? null : item.getDueDate().getTime());
-				db.update("todo", task, "title like '" + item.getTitle() + "'", null);
+				task.put("title", item.title);
+				task.put("due", item.date == null ? null : item.date.getTime());
+				db.update("todo", task, "title like '" + item.title + "'", null);
 
 				//Update the due date in the parse.
-				final Date due = item.getDueDate();
+				final Date due = item.date;
 				ParseQuery query = new ParseQuery("todo");
-				query.whereEqualTo("title", item.getTitle());
+				query.whereEqualTo("title", item.title);
 				query.findInBackground(new FindCallback() {
 					public void done(List<ParseObject> objects, ParseException e) {
 						if (e == null && !objects.isEmpty()) {
@@ -127,21 +146,27 @@ public class TodoDAL {
 	 * @param item
 	 * @return true if deletion was successful.
 	 */
-	public boolean delete(ITodoItem item) {
+	public boolean delete(Task item) {
 
-		for (ITodoItem it: items) {
-			if (it.getTitle().equals(item.getTitle())) {
-				
+		for (Task it: items) {
+			if (it.title.equals(item.title)) {
+
 				//Remove the item from the list.
 				items.remove(it);
 				listAdapter.notifyDataSetChanged();
 
 				//Remove the item from the database.
-				db.delete("todo", "title like '" + item.getTitle() + "'", null);
+				db.delete("todo", "title like '" + item.title + "'", null);
+				
+				//Delete task image from the device.
+				if (item.img != null) {
+					File file = new File(TodoListManagerActivity.getDir(), "taskImg" + item.id);
+					file.delete();
+				}
 
 				//Remove the item from the parse.
 				ParseQuery query = new ParseQuery("todo");
-				query.whereEqualTo("title", item.getTitle());
+				query.whereEqualTo("title", item.title);
 				query.findInBackground(new FindCallback() {
 					public void done(List<ParseObject> objects, ParseException e) {
 						if (e == null && !objects.isEmpty()) {
@@ -150,7 +175,7 @@ public class TodoDAL {
 						}
 					}
 				});
-				
+
 				return true;
 			}
 		}
@@ -162,8 +187,9 @@ public class TodoDAL {
 	 * Get all items in the list.
 	 * @return all items in the list.
 	 */
-	public List<ITodoItem> all() {
+	public List<Task> all() {
 		return items;
 	}
+
 
 }

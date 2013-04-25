@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tweetText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:text="" >
+
+        <requestFocus />
+    </TextView>
+
+    <Button
+        android:id="@+id/no"
+        android:layout_width="148dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/no2all"
+        android:layout_alignParentRight="true"
+        android:text="@string/no" />
+
+    <Button
+        android:id="@+id/no2all"
+        android:layout_width="148dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/yes2all"
+        android:layout_alignBottom="@+id/yes2all"
+        android:layout_alignParentRight="true"
+        android:text="@string/no2all" />
+
+    <Button
+        android:id="@+id/yes2all"
+        android:layout_width="148dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/yes"
+        android:text="@string/yes2all" />
+
+    <Button
+        android:id="@+id/yes"
+        android:layout_width="148dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tweetText"
+        android:text="@string/yes" />
+
+</RelativeLayout>

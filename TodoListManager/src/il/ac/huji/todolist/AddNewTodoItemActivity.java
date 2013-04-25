@@ -19,6 +19,11 @@ public class AddNewTodoItemActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_new_todo_item_activity);
 		setTitle("Add New Item");
+		
+		//Set a text when starting the activity from the tweet search.
+		String text = getIntent().getStringExtra("text");
+		if (text != null)
+			((EditText)findViewById(R.id.edtNewItem)).setText(text);
 
 		
 		findViewById(R.id.btnOK).setOnClickListener(new OnClickListener() {

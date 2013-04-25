@@ -4,5 +4,8 @@
     <item
         android:id="@+id/menuItemAdd"
         android:title="Add"/>
+    <item
+        android:id="@+id/menuCustom"
+        android:title="Customize"/>
 
 </menu>

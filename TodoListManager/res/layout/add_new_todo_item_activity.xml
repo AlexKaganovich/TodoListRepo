@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/datePicker"
         android:layout_below="@+id/datePicker"
-        android:text="Cancel" />
+        android:text="@string/cancel" />
 
     <Button
         android:id="@+id/btnOK"
@@ -36,6 +36,6 @@
         android:layout_alignBaseline="@+id/btnCancel"
         android:layout_alignBottom="@+id/btnCancel"
         android:layout_toRightOf="@+id/btnCancel"
-        android:text="OK" />
+        android:text="@string/ok" />
 
 </RelativeLayout>

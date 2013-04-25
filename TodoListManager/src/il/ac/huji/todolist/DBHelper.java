@@ -5,8 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
-	
-	//private Context c;
 
 	public DBHelper(Context c) {
 		super(c, "todo_db", null, 1);
@@ -14,7 +12,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL("create table todo ( _id integer primary key autoincrement, title string, due long );");
+		//db.execSQL("drop table todo");
+		db.execSQL("create table if not exists todo (_id integer primary key autoincrement, title text, due integer);");
 	}
 
 	@Override
