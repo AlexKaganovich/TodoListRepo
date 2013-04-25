@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.*;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -16,7 +18,6 @@ import android.widget.ListView;
 
 public class TodoListManagerActivity extends Activity {
 	
-	static final String PREF_NAME = "TodoListPref";
 	static final String TAG = "tag";
 
 	private ListView listView;
@@ -40,7 +41,7 @@ public class TodoListManagerActivity extends Activity {
 		registerForContextMenu(listView);
 		
 		//Get the tag. If no tag is defined, get "todoapp".
-		SharedPreferences pref = TodoListManagerActivity.mainActivity.getSharedPreferences(PREF_NAME, 0);
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 		tag = pref.getString(TAG, "todoapp");
 
 		new TwitterRetriever(tag).execute();

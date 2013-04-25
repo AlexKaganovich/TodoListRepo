@@ -8,6 +8,7 @@ import android.app.*;
 import android.content.*;
 import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 
 
 /**
@@ -123,7 +124,7 @@ public class TwitterRetriever extends AsyncTask<Void, Integer, ArrayList<Tweet>>
 		}
 
 		//Get the last seen tweet ID.
-		SharedPreferences pref = TodoListManagerActivity.mainActivity.getSharedPreferences(TodoListManagerActivity.PREF_NAME, 0);
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(TodoListManagerActivity.mainActivity);
 		long lastID = pref.getLong("#" + tag, 0);
 		
 		//Remove seen tweets.

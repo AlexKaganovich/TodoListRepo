@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;

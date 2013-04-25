@@ -12,7 +12,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		//db.execSQL("drop table todo");
 		db.execSQL("create table if not exists todo (_id integer primary key autoincrement, title text, due integer);");
 	}
 
