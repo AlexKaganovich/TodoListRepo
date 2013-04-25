@@ -12,7 +12,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 
@@ -54,10 +53,8 @@ public class TodoDAL {
 				items.add(t);
 
 				//Get the task image
-				BitmapFactory.Options options = new BitmapFactory.Options();
-				options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 				File file = new File(TodoListManagerActivity.getDir(), "taskImg" + taskID);
-				t.img = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+				t.img = BitmapFactory.decodeFile(file.getAbsolutePath());
 
 			} while (cursor.moveToNext());
 			listAdapter.notifyDataSetChanged();

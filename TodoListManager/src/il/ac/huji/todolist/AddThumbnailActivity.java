@@ -3,9 +3,7 @@ package il.ac.huji.todolist;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-
 import com.parse.ParseFile;
-
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -45,8 +43,8 @@ public class AddThumbnailActivity extends Activity {
 				FileOutputStream out = null;
 				try {
 					File file = new File(TodoListManagerActivity.getDir(), imgName);
-					file.createNewFile();
 					out = new FileOutputStream(file);
+					task.img.compress(Bitmap.CompressFormat.PNG, 100, out);
 				} catch (Exception e) {}
 				try {
 					out.close();
